@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD sur un tableau de pizzas</title>
+</head>
+<body>
+
+<h1>Liste des Pizzas</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody">
+        <!-- Les données de la table seront affichées ici -->
+    </tbody>
+</table>
+
+<!-- <h2>Menu Principal</h2>
+<ol>
+    <li>Afficher le tableau des pizzas</li>
+    <li>Ajouter une pizza</li>
+    <li>Modifier une pizza</li>
+    <li>Supprimer une pizza</li>
+</ol> -->
+
+<script>
+    let pizzas = [
+        { code: 'PEP', nom: 'Pépéroni', prix: 12.50 },
+        { code: 'MAR', nom: 'Margherita', prix: 14.00 },
+        { code: 'REIN', nom: 'La Reine', prix: 11.50 },
+        { code: 'FRO', nom: 'La 4 fromage', prix: 12.00 },
+        { code: 'CAN', nom: 'La cannibale', prix: 12.50 },
+        { code: 'SAV', nom: 'La savoyarde', prix: 13.00 },
+        { code: 'ORI', nom: 'Orientale', prix: 13.50 },
+        { code: 'IND', nom: 'indienne', prix: 14.00 },
+        
+    ];
+
+    function displayPizzas() {
+        const tableBody = document.getElementById('tableBody');
+        tableBody.innerHTML = '';
+
+        pizzas.forEach((pizza, index) => {
+            const row = `<tr>
+                            <td>${pizza.code}</td>
+                            <td>${pizza.nom}</td>
+                            <td>${pizza.prix}</td>
+                            <td><button onclick="addPizza(${index})">Ajouter</button> |<button onclick="editPizza(${index})">Modifier</button> | <button onclick="deletePizza(${index})">Supprimer</button></td>
+                         </tr>`;
+            tableBody.innerHTML += row;
+        });
+    }
+
+    function addPizza() {
+        const code = prompt('Entrez le code de la nouvelle pizza:');
+        const nom = prompt('Entrez le nom de la nouvelle pizza:');
+        const prix = parseFloat(prompt('Entrez le prix de la nouvelle pizza:'));
+
+        if (code && nom && !isNaN(prix)) {
+            const newPizza = { code, nom, prix };
+            pizzas.push(newPizza);
+            displayPizzas();
+        } else {
+            alert('Veuillez remplir toutes les informations correctement.');
+        }
+    }
+
+    function editPizza(index) {
+        const newCode = prompt('Entrez le nouveau code:');
+        const newNom = prompt('Entrez le nouveau nom:');
+        const newPrix = parseFloat(prompt('Entrez le nouveau prix:'));
+
+        if (newCode && newNom && !isNaN(newPrix)) {
+            pizzas[index].code = newCode;
+            pizzas[index].nom = newNom;
+            pizzas[index].prix = newPrix;
+            displayPizzas();
+        } else {
+            alert('Veuillez remplir toutes les informations correctement.');
+        }
+    }
+
+    function deletePizza(index) {
+        if (confirm('Êtes-vous sûr de vouloir supprimer cette pizza?')) {
+            pizzas.splice(index, 1);
+            displayPizzas();
+        }
+    }
+
+    // Initialiser l'affichage au chargement de la page
+    displayPizzas();
+</script>
+
+</body>
+</html>
